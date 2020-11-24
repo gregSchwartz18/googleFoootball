@@ -23,3 +23,4 @@ print(clf.score(X_test,y_test))
 
 filename = '/kaggle_simulations/agent/saved_model/model1.sav'
 pickle.dump(model, open(filename, 'wb'))
+print("Save model successful")
