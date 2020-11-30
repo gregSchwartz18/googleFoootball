@@ -1,3 +1,7 @@
 logs/
+<<<<<<< HEAD
 jsonFiles/
 plays_defense_expert.csv
+=======
+jsonFiles/
+>>>>>>> 5bbaf438ec6f5aeb0f76b433937a0d656226b98a
