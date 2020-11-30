@@ -2,6 +2,8 @@ import json
 import csv
 import math
 import numpy as np
+import matplotlib.pyplot as plt
+
 
 def inside(pos, area):
     return area[0][0] <= pos[0] <= area[0][1] and area[1][0] <= pos[1] <= area[1][1]
@@ -121,7 +123,8 @@ def best_pass_target(obs, active):
 # version
 
 csv_data = []
-for f_count in range(71):
+
+for f_count in range(101):
     f = open('jsonFiles/' + str(f_count) + '.json',) 
     data = json.load(f)
     # if (f_count == 0):
@@ -157,11 +160,9 @@ for f_count in range(71):
                         x = controlled_player_pos[0]
                         y = controlled_player_pos[1]
                         # controlled_player_dir = obs['left_team_direction'][obs['active']]
-                        
 
                         to_append.append(x)
                         to_append.append(y)
-
                         # to_append.append(controlled_player_dir[0])
                         # to_append.append(controlled_player_dir[1])
 
@@ -181,8 +182,22 @@ for f_count in range(71):
                         #     to_append.append(1)
                         # else:
                         #     to_append.append(0)
+                        if (obs['ball_owned_team'] == 1):
+                            to_append.append(1)
+                        else:
+                            to_append.append(0)
 
-                        
+
+                        if (obs['sticky_actions'][8] == 1):
+                            to_append.append(1)
+                        else:
+                            to_append.append(0)
+
+                        # if (obs['sticky_actions'][9] == 1):
+                        #     to_append.append(1)
+                        # else:
+                        #     to_append.append(0)
+
                         # if (obs['ball_owned_team'] == 1):
                         #     rightplayer = obs['right_team'][obs['ball_owned_player']]
                         #     to_append.append(rightplayer[0])
@@ -196,8 +211,11 @@ for f_count in range(71):
                         # for k in range(10):
                         #     to_append.append(obs['sticky_actions'][k])
                         
-                        # if (state_action == 13 or state_action == 15):
-                        #     continue
+                        
+
+                        if (state_action['action'][0] >= 9):
+                            continue
+                        
                         
                         to_append.append(state_action['action'][0])
 
@@ -205,9 +223,18 @@ for f_count in range(71):
                         csv_data.append(to_append)
     # Closing file 
     f.close()
+
+# x_pos = []
+# for i in range(9):
+#     x_pos.append(i)
+
+# plt.style.use('ggplot')
+# plt.bar(x_pos, lst)
+# plt.show()
+
 with open('plays_defense_expert1.csv', 'w') as file:
     writer = csv.writer(file, delimiter = ',')
-    writer.writerow(['x','y', 'ball_x', 'ball_y', 'direction_x', 'direction_y','action'])
+    writer.writerow(['x','y', 'ball_x', 'ball_y', 'direction_x', 'direction_y', 'ball_owned_team', 'sprinting', 'action'])
     for row in csv_data:
         writer.writerow(row)
 
