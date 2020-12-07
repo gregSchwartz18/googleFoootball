@@ -1,0 +1,6 @@
+kaggle-environments==1.7.0
+requests==2.25.0
+numpy==1.19.4
+gfootball==2.8
+cmake==3.18.4.post1
+
